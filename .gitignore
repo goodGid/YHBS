@@ -10,3 +10,5 @@
 .node_modules/*
 
 # End of https://www.gitignore.io/api/visualstudiocode
+config/aws_config.json
+config/db_config.json

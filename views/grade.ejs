@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1" />
+    <title>Young Hearts Boarding High School</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link href="/stylesheets/jquery.bxslider.css" rel="stylesheet" />
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+</head>
+  
+<body>
+
+<style type="text/css">
+         blockquote{
+             background: #f9f9f9;
+             border-left: 10px solid #cccccc;
+             margin: 1.5em 10px;
+             padding: 0.5em 10px;
+             quotes: "\201C""\201D""\2018""\2019";
+         }
+         blockquote:before{
+             color: #cccccc;
+             content: open-quote;
+             font-size: 3em;
+             line-height: 0.1em;
+             margin-left: 0.25em;
+             vertical-align: -0.4em;
+         }
+         blockquote:after{
+             color: #cccccc;
+             content: close-quote;
+             font-size: 3em;
+             line-height: 0.1em;
+             margin-left: 0.25em;
+             vertical-align: -0.4em;
+         }
+         @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,700,400italic);
+
+        font-family: 'Open Sans', sans-serif;
+
+        body {
+          min-height: 3000px;
+          padding-top: 70px;
+          font-family: 'Open Sans', sans-serif;
+        }
+
+        .thumbnail {
+            position: relative;
+            padding: 0px;
+            margin-bottom: 20px;
+        }
+
+        .thumbnail img {
+            width: 500px;
+            height:  300px;
+        }
+        </style>
+
+    <header>
+        <% include ./header %>
+    </header>
+
+       <div class="container" id="tourpackages-carousel">
+        <div class="row">
+         <% for (var i=0; i<imgList.length; i++) {%> 
+          <div class="col-xs-18 col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="<%= imgList[i].imgUrl %>" alt="">
+              <div class="caption">
+                <h4> tmp Title</h4>
+                <p> tmp Contents : test </p>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div><!-- End row -->     
+    </div><!-- End container -->
+    <br>
+
+    <footer>
+        <% include ./footer %>
+    </footer>
+
+</body>
+</html>
