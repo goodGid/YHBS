@@ -39,10 +39,19 @@ var upload = multer({
 
 // router.use
 
+/*
+ Method : Get
+*/
+
 router.get('/',function(req,res){
   console.log(" / in upload.js");
   res.render('upload');
 });
+
+/*
+ Method : Post
+*/
+
 
 router.post('/upload',upload.single('pic'), function(req, res)
 {

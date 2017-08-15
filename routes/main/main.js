@@ -1,17 +1,22 @@
-// default module
+/*
+ default module
+*/
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var router = express.Router();
 
-// custom module
+/*
+ custom module
+*/
 var db_config = require('../../config/db_config.json');
 
-// router.set
 
 
-// router.use
+/*
+ router.use
+*/
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -25,17 +30,44 @@ var pool = mysql.createPool({
   debug : false
 });
 
+/*
+ Method : Get
+*/
 router.get('/', function(req,res){
-    res.render('index');
+    res.render('index',{sessionValue : req.session.user_id});
 });
 
 
 router.get('/login',function(req,res){
-    console.log(' /routes/login in main.js ');
     res.render('login');
 });
 
-
+router.get('/logout', function(req, res)
+{
+       var session = req.session;
+       if(session.user_id)
+       {
+           req.session.destroy(function(err)
+           {
+               if(err)
+               {
+                   console.log(" Error /logout in main.js  : " + err);
+               }else
+               {
+                    res.redirect('/');
+               }
+           })
+       }
+       else
+       {
+          console.log("Session destroy");
+          res.redirect('/');
+       }
+   })
+   
+/*
+ Method : Post
+*/
 router.post('/login',function(req, res, next)
 {
       pool.getConnection(function(error, connection)
@@ -52,10 +84,10 @@ router.post('/login',function(req, res, next)
           {
             var exec = connection.query("select id from users where id = ? and password = ?", [user_id, password], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            console.log('실행 대상 SQL Length : ' + rows.length);
 
             if (rows.length != 0) {
                 console.log('아이디 [%s], 패스워드 [%s] 가 일치하는 사용자 찾음.', user_id, password);
+                req.session.user_id = user_id;
                 res.redirect('/');
             } else {
             	console.log("일치하는 사용자를 찾지 못함.");

@@ -1,17 +1,20 @@
-// default module
+/*
+ default module
+*/
 const express = require('express');
-var mysql = require('mysql');
-var bodyParser = require('body-parser');
-var ejs = require('ejs');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const ejs = require('ejs');
 const router = express.Router();
 
-// custom module
+/*
+ custom module
+*/
 var db_config = require('../../config/db_config.json');
 
-// router.set
-
-
-// router.use
+/*
+ router.use
+*/
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -24,6 +27,10 @@ var pool = mysql.createPool({
   connectionLimit : db_config.connectionLimit,
   debug : false
 });
+
+/*
+ Function Sector
+*/
 
 function getNoticeList(){
     return new Promise(function(resolve, reject){
@@ -39,6 +46,10 @@ function getNoticeList(){
         });
     });
 }
+
+/*
+ Method : Get
+*/
 
 router.get('/', async function(req,res){
     
@@ -61,6 +72,10 @@ router.get('/noticeInsertBoard',function(req,res){
 })
 
 
+/*
+ Method : Post
+*/
+
 router.post('/noticeInsertBoard',function(req,res){
       pool.getConnection(function(error, connection)
       {
@@ -80,25 +95,6 @@ router.post('/noticeInsertBoard',function(req,res){
             res.redirect('/nav/notice');
         });        
     }})
-    
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;

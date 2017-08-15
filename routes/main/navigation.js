@@ -1,17 +1,23 @@
-// default module
+/*
+ default module
+*/
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var router = express.Router();
 
-// custom module
+/*
+ custom module
+*/
 var db_config = require('../../config/db_config.json');
+var notification = require('./notice');
 
-// router.set
+/*
+ router.use
+*/
+router.use('/notice',notification);
 
-
-// router.use
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -25,25 +31,9 @@ var pool = mysql.createPool({
   debug : false
 });
 
-router.get('/admission',function(req,res){
-    res.render('admission');
-});
-
-router.get('/course',function(req,res){
-    res.render('course');
-});
-
-router.get('/expell',function(req,res){
-    res.render('expell');
-});
-
-router.get('/extra',function(req,res){
-    res.render('extra');
-});
-
-router.get('/facility',function(req,res){
-    res.render('facility');
-});
+/*
+ Function Sector
+*/
 
 function getThumbnailList(category){
     return new Promise(function(resolve, reject){
@@ -75,6 +65,30 @@ function getNoticeList(){
     });
 }
 
+
+/*
+ Method : Get
+*/
+router.get('/admission',function(req,res){
+    res.render('admission');
+});
+
+router.get('/course',function(req,res){
+    res.render('course');
+});
+
+router.get('/expell',function(req,res){
+    res.render('expell');
+});
+
+router.get('/extra',function(req,res){
+    res.render('extra');
+});
+
+router.get('/facility',function(req,res){
+    res.render('facility');
+});
+
 router.get('/grade', async function(req, res){
     try{
         var imageList = await getThumbnailList("grade");
@@ -86,16 +100,12 @@ router.get('/grade', async function(req, res){
 });
 
 router.get('/introduce',function(req,res){
-    res.render('introduce');
+        res.render('introduce');
 });
 
 router.get('/location',function(req,res){
     res.render('location');
 });
-
-const notification = require('./notice');
-router.use('/notice',notification);
-
 
 router.get('/nursery',async function(req,res){
     try{
