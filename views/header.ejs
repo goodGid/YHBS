@@ -6,16 +6,7 @@
 
 <p style="text-align:left; margin-left:5%; padding:1%;">
     <a href="/"><img style="width : 50%; height: auto;" src="/images/logo.png" /></a>
-    <% if (sessionValue == "admin") { %>
-        <input type="button" value="Logout" 
-        class="btn btn-default" style="float:right; text-align:right; font-size:8px;" 
-        onclick= "javascript:location='/logout'" /> 
-    <!-- <a href="/logout" hidden="false" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Logout</a> -->
-    <% } else { %>
-        <input type="button" value="Login" 
-        class="btn btn-default" style="float:right; text-align:right; font-size:8px;" 
-        onclick= "javascript:location='/login'" /> 
-    <% } %>
+    <a href="/logout" hidden="false" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Logout</a>
 </p>
 
 

@@ -27,21 +27,27 @@
     <div class="container">
     <div class="row">
         <div class="col-sm-10 col-md-10">
-        	<div class="well">
-        		<h1 class="text-info">Title</h1>
-        		<p><span class="label label-info">admin</span></p>
-        		<ul>
-        			<li>Date</li>
-        			<li>2017-08-11</li>
-        		</ul><hr>          
-        		<p>Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents Contents .</p>
-        		
-        		<h3>&nbsp;</h3>
-        		<hr>
-              <p><a class="btn btn-default btn-lg" href="/nav/notice"><i class="icon-ok">Back&nbsp;</i></a></p>
-        	</div>
+           <div class="well">
+              <h1 class="text-info"><%= result[0].title %></h1>
+              <p><span class="label label-info">admin</span></p>
+              <ul>
+                 <li>Date</li>
+                 <li><%= result[0].date %></li>
+              </ul><hr>          
+              <p><%= result[0].contents %></p>
+              
+              <h3>&nbsp;</h3>
+              <hr>
+             
+              <a class="btn btn-default btn-lg" href="/nav/notice"><i class="icon-ok">Back&nbsp;</i></a>
+              <div style="text-align:right; float:right">
+              <div style="margin:0 auto">
+              <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
+              <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              </div></div>
+           </div>
         </div>
-	</div>
+   </div>
 </div>
    
     <!-- ################################################### -->

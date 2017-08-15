@@ -63,8 +63,24 @@ router.get('/', async function(req,res){
     
 });
 
-router.get('/noticeBoard', function(req,res){
-    res.render('noticeBoard');
+router.get('/noticeBoard/:seq', function(req,res){
+    
+     pool.getConnection(function(error, connection)
+      {
+          var seq = req.params.seq;
+          if(error)
+          {
+            console.log("database error");
+            res.status(503).send({result:"fail"});
+            connection.release();
+          }
+          else
+          {
+            var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
+            connection.release();  // 반드시 해제해야 합니다.
+            res.render('noticeBoard', {result : rows });
+        });        
+    }})
 });
 
 router.get('/noticeInsertBoard',function(req,res){
@@ -72,13 +88,75 @@ router.get('/noticeInsertBoard',function(req,res){
 })
 
 
+router.get('/noticeDelete/:seq',function(req,res){
+    pool.getConnection(function(error, connection)
+      {
+          var seq = req.params.seq;
+          if(error)
+          {
+            console.log("database error");
+            res.status(503).send({result:"fail"});
+            connection.release();
+          }
+          else
+          {
+            var exec = connection.query("delete from notice_BBS where seq = ?", [seq], function(err, rows) {
+            connection.release();  // 반드시 해제해야 합니다.
+            res.redirect('/nav/notice');
+        });        
+    }})
+})
+
+router.get('/noticeEdit/:seq',function(req,res){
+    pool.getConnection(function(error, connection)
+      {
+          var seq = req.params.seq;
+          if(error)
+          {
+            console.log("database error");
+            res.status(503).send({result:"fail"});
+            connection.release();
+          }
+          else
+          {
+            var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
+            connection.release();  // 반드시 해제해야 합니다.
+            res.render('noticeEditBoard', {result : rows});
+        });        
+    }})
+})
+
+
 /*
  Method : Post
 */
-
 router.post('/noticeInsertBoard',function(req,res){
-      pool.getConnection(function(error, connection)
+    pool.getConnection(function(error, connection)
+    {
+        var title = req.body.title;
+        var contents = req.body.contents;
+        if(error)
+        {
+          console.log("database error");
+          res.status(503).send({result:"fail"});
+          connection.release();
+        }
+        else
+        {
+          var exec = connection.query("INSERT INTO yhbs.notice_BBS (`title`, `contents`, `date`, `viewCnt`) VALUES (?, ?, '4', '4')", [title, contents], function(err, rows) {
+          connection.release();  // 반드시 해제해야 합니다.
+
+          res.redirect('/nav/notice');
+      });        
+  }})
+  
+})
+
+
+router.post('/noticeEditBoard/:seq',function(req,res){
+    pool.getConnection(function(error, connection)
       {
+          var seq = req.params.seq;
           var title = req.body.title;
           var contents = req.body.contents;
           if(error)
@@ -89,12 +167,32 @@ router.post('/noticeInsertBoard',function(req,res){
           }
           else
           {
-            var exec = connection.query("INSERT INTO yhbs.notice_BBS (`title`, `contents`, `date`, `viewCnt`) VALUES (?, ?, '4', '4')", [title, contents], function(err, rows) {
+            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ? where seq = ?", [title, contents, seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-
             res.redirect('/nav/notice');
         });        
     }})
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
