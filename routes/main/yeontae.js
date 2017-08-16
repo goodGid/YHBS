@@ -100,3 +100,16 @@ router.post('/',upload.single('image'), function(req, res){ //multer 쓰므로 �
   });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -68,7 +68,7 @@ router.get('/', async function(req,res){
         var result = await getNoticeList();
         var imgList = await getImgList();
         var sessionValue = req.session.user_id;
-        
+
         res.render('index', {result: result, imgList : imgList, sessionValue : sessionValue});        
     }catch(err){
         console.log(err);

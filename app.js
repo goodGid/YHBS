@@ -6,6 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 /*
  custom module
@@ -25,12 +26,14 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(session(
   {
-    secret: '@#@$MYSIGN#@$#$', //세션을 암호화 하여 저장
+    secret: 'yhbschool', //세션을 암호화 하여 저장
     resave: false,// 세션을 언제나 저장할지 결정
-    saveUninitialized: true // 세션이 저장되기 전에 saveUninitialized 상태로 저장
+    saveUninitialized: true, // 세션이 저장되기 전에 saveUninitialized 상태로 저장
+    cookie: { secure: !true }    
   }));
 
 
@@ -48,9 +51,9 @@ app.use(function(req, res, next)
 app.use(function(err, req, res, next)
 {
   res.locals.message = err.message;
-  // console.log("res.locals.message error : " + res.locals.message);
+  console.log("res.locals.message error : " + res.locals.message);
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // console.log("res.locals.error error : " + res.locals.error);
+  console.log("res.locals.error error : " + res.locals.error);
 
   res.status(err.status || 500);
   res.render('error');
