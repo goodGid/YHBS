@@ -214,11 +214,9 @@ router.get('/etc', async function(req,res){
     try{
         var imageList = await getThumbnailList("etc");
         var pageNumber = req.query.pageNumber;
+        var sessionValue = req.session.user_id;
 
-        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
-        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
-
-        res.render('etc', {imgList: imageList, pageNumber : pageNumber});        
+        res.render('etc', {imgList: imageList, pageNumber : pageNumber, sessionValue : sessionValue});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -247,6 +245,7 @@ router.get('/etcEditBoard/:seq', async function(req,res){
     }    
 });
 
+
 router.get('/etcInsertBoard', async function(req,res){
     try{
         var insertImg = await insertThumbnail("etc", seq);
@@ -255,7 +254,6 @@ router.get('/etcInsertBoard', async function(req,res){
         console.log(err);
         res.status(503).send({result: "fail"});
     }    
-});
 
 
 

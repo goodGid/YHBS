@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1" />
+    <title>Young Hearts Boarding High School</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link href="/stylesheets/jquery.bxslider.css" rel="stylesheet" />
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+     <script language="javaScript">
+         function check(){
+             if(document.form.title.value=="" || document.form.contents.value==""){
+                    alert("Please fill in the blanks.");
+             }else{
+                 form.submit();
+             }
+         }
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <% include ./header %>
+    </header>
+
+    <style>
+    .contact-form{ margin-top:15px;}
+    .contact-form .textarea{ min-height:220px; resize:none;}
+    .form-control{ box-shadow:none; border-color:#eee; height:49px;}
+    .form-control:focus{ box-shadow:none; border-color:#00b09c;}
+    .form-control-feedback{ line-height:50px;}
+    .main-btn{ background:#00b09c; border-color:#00b09c; color:#fff;}
+    .main-btn:hover{ background:#00a491;color:#fff;}
+    .form-control-feedback {
+        line-height: 50px;
+        top: 0px;
+    }
+    </style>
+   
+    
+    <div class="container">
+        <div class="row">
+            <form action="/nav/etcInsertBoard" method="post" name="form" role="form" id="contact-form" class="contact-form" enctype="multipart/form-data">
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title">
+                    </div>
+                </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="file" name="pic" accept="image/*" />
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="form-control textarea" rows="3" name="contents" id="contents" placeholder="Contents"></textarea>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12">
+                  <input type="button" class="btn main-btn pull-right" onclick="check();" value="Finished writing"></button>
+                  </div>
+              </div>
+            </form>
+        </div>
+    </div><br><br><br>
+    
+
+
+    <footer>
+        <% include ./footer %>
+    </footer>
+
+</body>
+</html>
+
