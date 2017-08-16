@@ -51,7 +51,7 @@ function getNoticeList(){
 */
 
 router.get('/' , async function(req,res){
-    console.log("in notice.js    here");
+    console.log(" [in notice.js]    here");
     try{
         var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();

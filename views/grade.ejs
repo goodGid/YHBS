@@ -70,20 +70,16 @@
     </header>
 
         <% var totalCnt = imgList.length; %>
-        <% var contentsCntPerOnePage = 9; %>
-        <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
-        <% var currentCategory = "grade"; %>
 
         <div class="container" id="tourpackages-carousel">
                 <div class="row">
-                 <% for(var i = totalCnt - contentsCntPerOnePage * (pageNumber * 1 - 1 ) ; i > totalCnt - contentsCntPerOnePage * (pageNumber * 1 ); i--){ 
-                    if (i <= 0 ) break; %>   
+                 <% for(var i = totalCnt-1; i >= 0; i--){ %>   
                   <div class="col-xs-18 col-sm-6 col-md-4">
                   <div class="thumbnail">
-                    <img src="<%= imgList[i-1].imgUrl %>" alt="">
+                    <img src="<%= imgList[i].imgUrl %>" alt="">
                     <div class="caption">
-                            <h4> <%= imgList[i-1].title %></h4>
-                            <p> <%= imgList[i-1].contents %> </p>
+                            <h4> <%= imgList[i].title %></h4>
+                            <p> <%= imgList[i].contents %> </p>
                     </div>
                   </div>
                 </div>
@@ -92,12 +88,6 @@
       </div><!-- End row -->     
     </div><!-- End container -->
     <br>
-
-
-    <!-- 
-        currentPageNumber Sector  
-                                  -->
-    <% include ./currentPageNumber %>
 
     <footer>
         <% include ./footer %>

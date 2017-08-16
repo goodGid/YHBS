@@ -33,8 +33,47 @@ var pool = mysql.createPool({
 /*
  Method : Get
 */
-router.get('/', function(req,res){
-    res.render('index',{sessionValue : req.session.user_id});
+
+function getNoticeList(){
+    return new Promise(function(resolve, reject){
+        pool.getConnection(function(err, connection){
+            if(err) reject(err);
+            else {
+                connection.query('select * from notice_BBS', function(err, rows){
+                    connection.release();
+                    if(err) reject(err);
+                    else resolve(rows);
+                });
+            }
+        });
+    });
+}
+function getImgList(){
+    return new Promise(function(resolve, reject){
+        pool.getConnection(function(err, connection){
+            if(err) reject(err);
+            else {
+                connection.query('select * from img_BBS', function(err, rows){
+                    connection.release();
+                    if(err) reject(err);
+                    else resolve(rows);
+                });
+            }
+        });
+    });
+}
+
+router.get('/', async function(req,res){
+    
+    try{
+        var result = await getNoticeList();
+        var imgList = await getImgList();
+        res.render('index', {result: result, imgList : imgList});        
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }
+    
 });
 
 
