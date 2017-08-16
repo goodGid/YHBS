@@ -30,15 +30,18 @@
                  <li>Date</li>
                  <li><%= result[0].date %></li>
               </ul><hr>          
-              <textarea class="form-control col-sm-5" rows="20" disabled style="background:white;"><%= result[0].contents %></textarea>
+              <textarea class="form-control col-sm-5" rows="20" disabled style="color:black; background:white;"><%= result[0].contents %></textarea>
               <h3>&nbsp;</h3>
               <hr>
              
               <a class="btn btn-default btn-lg" href="/nav/notice/?pageNumber=1"><i class="icon-ok">Back&nbsp;</i></a>
               <div style="text-align:right; float:right">
               <div style="margin:0 auto">
-              <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
-              <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              <% if ( sessionValue == "admin") { %>
+                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
+                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              <% } else { %>
+              <% } %>
               </div></div>
            </div>
         </div>

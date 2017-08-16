@@ -69,6 +69,7 @@ router.get('/noticeBoard/:seq', function(req,res){
      pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;
+          var sessionValue = req.session.user_id;
           if(error)
           {
             console.log("database error");
@@ -86,7 +87,7 @@ router.get('/noticeBoard/:seq', function(req,res){
                     var secondExec = connection.query(secondQuery, [tmpViewCnt, seq], function(err, rows) {
                     });        
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeBoard', {result : rows });
+            res.render('noticeBoard', {result : rows, sessionValue : sessionValue });
         });        
     }})
 });
