@@ -121,7 +121,7 @@ router.get('/noticeEdit/:seq',function(req,res){
           {
             var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeEditBoard/?pageNumber=1', {result : rows});
+            res.render('noticeEditBoard',{result : rows});
         });        
     }})
 })
@@ -145,8 +145,7 @@ router.post('/noticeInsertBoard',function(req,res){
         {
           var exec = connection.query("INSERT INTO yhbs.notice_BBS (`title`, `contents`, `date`, `viewCnt`) VALUES (?, ?, '4', '4')", [title, contents], function(err, rows) {
           connection.release();  // 반드시 해제해야 합니다.
-
-          res.redirect('/nav/notice');
+          res.redirect('/nav/notice/?pageNumber=1');
       });        
   }})
   
@@ -169,7 +168,7 @@ router.post('/noticeEditBoard/:seq',function(req,res){
           {
             var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ? where seq = ?", [title, contents, seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice');
+            res.redirect('/nav/notice/?pageNumber=1');
         });        
     }})
 })
