@@ -99,7 +99,12 @@
       </div><!-- End row -->     
     </div><!-- End container -->
     <br>
-  
+    <% if ( sessionValue == "admin") { %>
+        <p style="text-align : center;">
+          <a href="/nav/etcInsertBoard" class="btn btn-default"  style="font-size:15px;">Write</a>
+        </p>
+    <% } else { %>
+    <% } %>
     <!-- 
         currentPageNumber Sector  
                                   -->

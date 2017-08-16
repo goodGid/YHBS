@@ -214,11 +214,9 @@ router.get('/etc', async function(req,res){
     try{
         var imageList = await getThumbnailList("etc");
         var pageNumber = req.query.pageNumber;
+        var sessionValue = req.session.user_id;
 
-        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
-        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
-
-        res.render('etc', {imgList: imageList, pageNumber : pageNumber});        
+        res.render('etc', {imgList: imageList, pageNumber : pageNumber, sessionValue : sessionValue});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -249,14 +247,8 @@ router.get('/etcEditBoard/:seq', async function(req,res){
 
 //post 방식으로 etcEditBoard 구현해야함.
 //insert 구현가능해
-router.get('/etcInsertBoard', async function(req,res){
-    try{
-        var insertImg = await insertThumbnail("etc", seq);
-        res.redirect('/nav/etc/?pageNumber = 1');   
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }    
+router.get('/etcInsertBoard', function(req,res){
+    res.render('etcInsertBoard');
 });
 
 router.get('/etcDelete/:seq', async function(req,res){
