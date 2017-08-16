@@ -53,7 +53,7 @@ function getImgList(){
         pool.getConnection(function(err, connection){
             if(err) reject(err);
             else {
-                connection.query('select * from img_BBS', function(err, rows){
+                connection.query("select * from img_BBS where category='etc'", function(err, rows){
                     connection.release();
                     if(err) reject(err);
                     else resolve(rows);
