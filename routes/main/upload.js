@@ -55,9 +55,9 @@ router.get('/',function(req,res){
 
 router.post('/upload',upload.single('pic'), function(req, res)
 {
-  var imUrlFromS3 = req.file.location;
-
-res.end();
+  var imgUrlFromS3 = req.file.location;
+  console.log(" imgUrl : " + imgUrlFromS3);
+  res.end();
 });
 
 module.exports = router;

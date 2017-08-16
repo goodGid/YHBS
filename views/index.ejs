@@ -26,6 +26,12 @@
     </script>
 </head>
 <body>
+    <% if (sessionValue == "Admin"){ %>
+    <input type="button" value="Logout" class="btn btn-default" style="float:right; text-align:right; font-size:8px;">
+    <% } else { %>
+        <input type="button" value="Admin" class="btn btn-default" style="float:right; text-align:right; font-size:8px;">
+    <% }  %>
+    
     <header>
         <% include ./header %>
     </header>

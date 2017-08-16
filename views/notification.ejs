@@ -70,12 +70,9 @@
     }
   </style>
     
-    <!--################################-->
-
     <header>
         <% include ./header %>
     </header>
-    <!-- ######################################################### -->
 
   <div id="container">
     <div id="list">
@@ -86,50 +83,44 @@
         <thead>
           <tr>
             <th width="10%">No.</th>
-            <th width="50%">Title</th>
+            <th width="40%">Title</th>
             <th width="10%">Author</th>
             <th width="20%">Date</th>
-            <th width="10%">Review</th>
+            <th width="10%">View</th>
           </tr>
         </thead>
         <tbody>
-        <% totalCnt = result.length; barCnt = 0; %>
-         <% for(var i=0; i< 3;i++){ 
-                var next = result.length - i - 1 %>
+        
+        <% var totalCnt = result.length; %>
+        <% var contentsCntPerOnePage = 7; %>
+        <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
+        <% var currentCategory = "notice"; %>
+
+         <% for(var i = totalCnt - 7 * (pageNumber * 1 - 1 ) ; i > totalCnt - 7 * (pageNumber * 1 ); i--){ 
+          if (i <= 0 ) break; %>
             <tr>
-              <td><%= result.length - i %></td>
-              <td id="title">
-                <a href="/nav/notice/noticeBoard/<%= result[next].seq %>">
-                <%= result[next].title %></a>
-              </td>
-              <td>Admin</td>
-              <td><%= result[next].date %></td>
-              <td><%= result[next].viewCnt %></td>
+                <td><%= i %></td> 
+                <td id="title" >
+                    <a href="/nav/notice/noticeBoard/<%= result[i-1].seq %>">
+                      <%= result[i-1].title%></a> 
+                  </td>
+                <td>Admin</td>
+                <td><%= result[i-1].date %></td>
+                <td><%= result[i-1].viewCnt %></td>
             </tr>
-          <% totalCnt = totalCnt / 7; barCnt++; } %>
+          <%  } %>
         </tbody>
       </table> 
     </div>
   </div>
 
-  <div style="text-align:center;">
-   <div id="container" style="margin:0 auto;">
-     <ul  class="pagination">
-       <li><a href="#"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-        <% for(var i=0; i<result.length / 7;i++){ %>
-            <li>
-             <a href="/nav/notice/"><%= parseInt(result.length / 7) - i + 1%></a>
-            </li>
-        <%}%>
-       <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-       </ul>
-       
-       <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Write</a>
-       
-    </div>
-    </div>
+
+    <!-- 
+        currentPageNumber Sector  
+                                  -->
+    <% include ./currentPageNumber %>
+    <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Write</a>
     
-    <!-- ######################################################### -->
     <footer>
         <% include ./footer %>
     </footer>

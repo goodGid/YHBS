@@ -67,15 +67,21 @@
         <% include ./header %>
     </header>
 
+        <% var totalCnt = imgList.length; %>
+        <% var contentsCntPerOnePage = 9; %>
+        <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
+        <% var currentCategory = "etc"; %>
+
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-          <% for (var i=0; i<imgList.length; i++) {%>  
+          <% for(var i = totalCnt - contentsCntPerOnePage * (pageNumber * 1 - 1 ) ; i > totalCnt - contentsCntPerOnePage * (pageNumber * 1 ); i--){ 
+            if (i <= 0 ) break; %>   
           <div class="col-xs-18 col-sm-6 col-md-4">
           <div class="thumbnail">
-            <img src="<%= imgList[i].imgUrl %>" alt="">
+            <img src="<%= imgList[i-1].imgUrl %>" alt="">
               <div class="caption">
-                <h4> tmp Title</h4>
-                <p> tmp Contents : test </p>
+                <h4><%= imgList[i-1].title %></h4>
+                <p><%= imgList[i-1].contents %> </p>
             </div>
           </div>
         </div>
@@ -83,18 +89,12 @@
       </div><!-- End row -->     
     </div><!-- End container -->
     <br>
-  
-     <div class="container">
-     <ul  class="pagination">
-       <li><a href="#"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-       <li><a href="/nav/grad/pageNumberComingFrom=?">1</a></li>
-       <li><a href="#">2</a></li>
-       <li><a href="#">3</a></li>
-       <li><a href="#">4</a></li>
-       <li><a href="#">5</a></li>
-       <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-     </ul>
-    </div> 
+
+
+    <!-- 
+        currentPageNumber Sector  
+                                  -->
+       <% include ./currentPageNumber %>
 
 
     <footer>

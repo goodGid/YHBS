@@ -31,17 +31,16 @@ var pool = mysql.createPool({
 /*
  Function Sector
 */
-
 function getNoticeList(){
     return new Promise(function(resolve, reject){
         pool.getConnection(function(err, connection){
             if(err) reject(err);
             else {
-                connection.query('select * from notice_BBS', function(err, rows){
-                    connection.release();
-                    if(err) reject(err);
-                    else resolve(rows);
-                });
+                connection.query("select * from notice_BBS", function(err, rows){
+                connection.release();
+                if(err) reject(err);
+                else resolve(rows);
+            });
             }
         });
     });
@@ -51,20 +50,25 @@ function getNoticeList(){
  Method : Get
 */
 
-router.get('/', async function(req,res){
-    
+router.get('/?pageNumber' , async function(req,res){
+    console.log("in notice.js    here");
     try{
+        var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
-        res.render('notification', {result: result});        
+        console.log(" [in notice.js]  result.length :  " + result.length );
+        console.log(" [in notice.js]  pageNumber :  " + pageNumber );
+
+
+
+        res.render('notification', {result: result, pageNumber : pageNumber});        
+
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
     }
-    
 });
 
 router.get('/noticeBoard/:seq', function(req,res){
-    
      pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;

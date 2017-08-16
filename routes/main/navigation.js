@@ -89,10 +89,15 @@ router.get('/facility',function(req,res){
     res.render('facility');
 });
 
-router.get('/grade', async function(req, res){
+router.get('/grade/:pageNumber', async function(req, res){
     try{
         var imageList = await getThumbnailList("grade");
-        res.render('grade', {imgList: imageList});        
+        var pageNumber = req.params.pageNumber;
+
+        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
+        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
+
+        res.render('grade', {imgList: imageList,pageNumber : pageNumber});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -145,10 +150,15 @@ router.get('/volunteer', async function(req,res){
     }
 });
 
-router.get('/etc', async function(req,res){
+router.get('/etc/:pageNumber', async function(req,res){
     try{
         var imageList = await getThumbnailList("etc");
-        res.render('etc', {imgList: imageList});        
+        var pageNumber = req.params.pageNumber;
+
+        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
+        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
+
+        res.render('etc', {imgList: imageList, pageNumber : pageNumber});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
