@@ -70,7 +70,7 @@ function insertThumbnail(category, seq){
         pool.getConnection(function(err, connection){
             if(err) reject(err);
             else {
-                connection.query('delete from img_bbs where category = ? and seq = ?', [category, seq], function(err, rows){
+                connection.query('insert from img_bbs where category = ? and seq = ?', [category, seq], function(err, rows){
                     connection.release();
                     if(err) reject(err);
                     else resolve(rows);
@@ -85,7 +85,7 @@ function deleteThumbnail(category, seq){
         pool.getConnection(function(err, connection){
             if(err) reject(err);
             else {
-                connection.query('delete from img_bbs where category = ? and seq = ?', [category, seq], function(err, rows){
+                connection.query('delete from img_BBS where category = ? and seq = ?', [category, seq], function(err, rows){
                     connection.release();
                     if(err) reject(err);
                     else resolve(rows);
@@ -252,7 +252,7 @@ router.get('/etcEditBoard/:seq', async function(req,res){
 router.get('/etcInsertBoard', async function(req,res){
     try{
         var insertImg = await insertThumbnail("etc", seq);
-        res.redirect('/nav/etc');   
+        res.redirect('/nav/etc/?pageNumber = 1');   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
