@@ -51,14 +51,12 @@ function getNoticeList(){
 */
 
 router.get('/' , async function(req,res){
-    console.log("in notice.js    here");
+    console.log(" [in notice.js]    here");
     try{
         var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
         console.log(" [in notice.js]  result.length :  " + result.length );
         console.log(" [in notice.js]  pageNumber :  " + pageNumber );
-
-
 
         res.render('notification', {result: result, pageNumber : pageNumber});        
 
@@ -173,7 +171,7 @@ router.post('/noticeEditBoard/:seq',function(req,res){
           {
             var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ? where seq = ?", [title, contents, seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice');
+            res.redirect('/nav/notice/?pageNumber=1');
         });        
     }})
 })

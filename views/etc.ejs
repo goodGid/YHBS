@@ -74,9 +74,7 @@
 
     <div class="container" id="tourpackages-carousel">
         <div class="row">
- 
- 
-                     <% for(var i = totalCnt - contentsCntPerOnePage * (pageNumber * 1 - 1 ) ; i > totalCnt - contentsCntPerOnePage * (pageNumber * 1 ); i--){ 
+        <% for(var i = totalCnt - contentsCntPerOnePage * (pageNumber * 1 - 1 ) ; i > totalCnt - contentsCntPerOnePage * (pageNumber * 1 ); i--){ 
             if (i <= 0 ) break; %>   
           <div class="col-xs-18 col-sm-6 col-md-4">
           <div class="thumbnail">
@@ -93,29 +91,10 @@
     </div><!-- End container -->
     <br>
   
-     <div class="container">
-     <ul  class="pagination">
-       <li><a href="#"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-       <li><a href="/nav/grad/pageNumberComingFrom=?">1</a></li>
-       <li><a href="#">2</a></li>
-       <li><a href="#">3</a></li>
-       <li><a href="#">4</a></li>
-       <li><a href="#">5</a></li>
-       <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-     </ul>
-     
-       <a href="/nav/etcInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:20px;">Write</a>
-       
-    </div> 
-=======
-
-
     <!-- 
         currentPageNumber Sector  
                                   -->
        <% include ./currentPageNumber %>
->>>>>>> ed278ddeb95c3543a23532549eea469e9384f6fb
-
 
     <footer>
         <% include ./footer %>

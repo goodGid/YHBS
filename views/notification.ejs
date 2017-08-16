@@ -90,7 +90,6 @@
           </tr>
         </thead>
         <tbody>
-        
         <% var totalCnt = result.length; %>
         <% var contentsCntPerOnePage = 7; %>
         <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
@@ -113,12 +112,12 @@
       </table> 
     </div>
   </div>
-
+<p style="text-align : center;"><a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="font-size:15px;">Write</a></p>
+    
     <!-- 
         currentPageNumber Sector  
                                   -->
     <% include ./currentPageNumber %>
-    <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Write</a>
     
     <footer>
         <% include ./footer %>
