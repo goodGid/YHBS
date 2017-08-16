@@ -21,6 +21,8 @@
     <header>
         <% include ./header %>
     </header>
+
+    <!-- ##################################################-->
     
     <div class="container">
     <div class="row">
@@ -31,22 +33,26 @@
               <ul>
                  <li>Date</li>
                  <li><%= result[0].date %></li>
-              </ul><hr>          
+              </ul><hr>
+              <img src="<%= result[0].imgUrl %>"><br>
+              <hr><br>
               <p><%= result[0].contents %></p>
               
               <h3>&nbsp;</h3>
               <hr>
              
-              <a class="btn btn-default btn-lg" href="/nav/notice/?pageNumber=1"><i class="icon-ok">Back&nbsp;</i></a>
+              <a class="btn btn-default btn-lg" href="/nav/etc"><i class="icon-ok">Back&nbsp;</i></a>
               <div style="text-align:right; float:right">
               <div style="margin:0 auto">
-              <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
-              <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              <a class="btn btn-default btn-lg" href="/nav/etcDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
+              <a class="btn btn-default btn-lg" href="/nav/etcEditBoard/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
               </div></div>
            </div>
         </div>
    </div>
 </div>
+   
+    <!-- ################################################### -->
 
     <footer>
         <% include ./footer %>

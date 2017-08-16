@@ -31,17 +31,16 @@ var pool = mysql.createPool({
 /*
  Function Sector
 */
-
 function getNoticeList(){
     return new Promise(function(resolve, reject){
         pool.getConnection(function(err, connection){
             if(err) reject(err);
             else {
-                connection.query('select * from notice_BBS', function(err, rows){
-                    connection.release();
-                    if(err) reject(err);
-                    else resolve(rows);
-                });
+                connection.query("select * from notice_BBS", function(err, rows){
+                connection.release();
+                if(err) reject(err);
+                else resolve(rows);
+            });
             }
         });
     });
@@ -50,21 +49,23 @@ function getNoticeList(){
 /*
  Method : Get
 */
-
-router.get('/', async function(req,res){
-    
+router.get('/' , async function(req,res){
+    console.log(" [in notice.js]    here");
     try{
+        var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
-        res.render('notification', {result: result});        
+        console.log(" [in notice.js]  result.length :  " + result.length );
+        console.log(" [in notice.js]  pageNumber :  " + pageNumber );
+
+        res.render('notification', {result: result, pageNumber : pageNumber});        
+
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
     }
-    
 });
 
 router.get('/noticeBoard/:seq', function(req,res){
-    
      pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;
@@ -87,7 +88,6 @@ router.get('/noticeInsertBoard',function(req,res){
     res.render('noticeInsertBoard');
 })
 
-
 router.get('/noticeDelete/:seq',function(req,res){
     pool.getConnection(function(error, connection)
       {
@@ -102,7 +102,7 @@ router.get('/noticeDelete/:seq',function(req,res){
           {
             var exec = connection.query("delete from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice');
+            res.redirect('/nav/notice/?pageNumber=1');
         });        
     }})
 })
@@ -121,7 +121,7 @@ router.get('/noticeEdit/:seq',function(req,res){
           {
             var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeEditBoard', {result : rows});
+            res.render('noticeEditBoard/?pageNumber=1', {result : rows});
         });        
     }})
 })
@@ -173,26 +173,6 @@ router.post('/noticeEditBoard/:seq',function(req,res){
         });        
     }})
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

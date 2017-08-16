@@ -1,0 +1,47 @@
+<div style="text-align:center;">
+        <div id="container" style="margin:0 auto;">
+          <ul  class="pagination">
+
+            <!-- 
+              Previous Button
+                              -->
+            <% if (  parseInt( pageNumber / 5 ) == 0) { %>
+              <li><a href="/nav/<%= currentCategory %>/?pageNumber=1"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+            <% } else {%>
+              <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= ( parseInt(pageNumber / 5) - 1 ) * 5 + 1 %>"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+            <% } %> 
+  
+            <!-- 
+              Current PageNumber 
+                                -->
+            <% if( totalCnt / 5 * contentsCntPerOnePage > 0 ) {
+              if ( pageNumber % 5 == 0 ) {pageNumber = pageNumber - 5;}
+              for(var i = 5 * parseInt( pageNumber / 5 ) ; i < 5 * parseInt( pageNumber / 5 ) + 5; i++) { 
+                var loopChk = totalCnt - parseInt( contentsCntPerOnePage * i ) ;
+                if ( loopChk <= 0 ) break;  %>
+                    <li>
+                    <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
+                   </li>
+               <% }
+              } else { 
+                for(var i = 0 ; i < 5; i++){ %>
+                  <li>
+                    <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
+                   </li>
+                <% } %>
+           <% } %>
+  
+
+           <!-- 
+              Next Button
+                          -->
+                          <%= pageBarNumber %>
+          <% if ( parseInt( pageNumber / 5 ) * 5 + 5  <= parseInt(pageBarNumber+1) ) { %>
+            <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt( pageNumber / 5 ) * 5 + 5  + 1  %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+          <% } else { %>
+            <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt(pageBarNumber+1) %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+          <% } %>
+  
+          </ul>
+      </div>
+   </div>

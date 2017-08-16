@@ -69,19 +69,22 @@
         <% include ./header %>
     </header>
 
-       <div class="container" id="tourpackages-carousel">
-        <div class="row">
-         <% for (var i=0; i<imgList.length; i++) {%> 
-          <div class="col-xs-18 col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img src="<%= imgList[i].imgUrl %>" alt="">
-              <div class="caption">
-                <h4> tmp Title</h4>
-                <p> tmp Contents : test </p>
-            </div>
-          </div>
-        </div>
-        <% } %>
+        <% var totalCnt = imgList.length; %>
+
+        <div class="container" id="tourpackages-carousel">
+                <div class="row">
+                 <% for(var i = totalCnt-1; i >= 0; i--){ %>   
+                  <div class="col-xs-18 col-sm-6 col-md-4">
+                  <div class="thumbnail">
+                    <img src="<%= imgList[i].imgUrl %>" alt="">
+                    <div class="caption">
+                            <h4> <%= imgList[i].title %></h4>
+                            <p> <%= imgList[i].contents %> </p>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+        
       </div><!-- End row -->     
     </div><!-- End container -->
     <br>
