@@ -77,7 +77,14 @@ router.get('/noticeBoard/:seq', function(req,res){
           }
           else
           {
-            var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
+            var firstQuery = "select * from notice_BBS where seq = ?";
+            var secondQuery = "UPDATE notice_BBS set view = ? where seq = ?";
+
+            var firstExec = connection.query(firstQuery, [seq], function(err, rows) {
+                    var tmpViewCnt = rows[0].view + 1 ;
+                    console.log(" [ get /noticeBoard in notice.js]  tmpViewCnt :  " + tmpViewCnt );
+                    var secondExec = connection.query(secondQuery, [tmpViewCnt, seq], function(err, rows) {
+                    });        
             connection.release();  // 반드시 해제해야 합니다.
             res.render('noticeBoard', {result : rows });
         });        
@@ -100,6 +107,7 @@ router.get('/noticeDelete/:seq',function(req,res){
           }
           else
           {
+            
             var exec = connection.query("delete from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
             res.redirect('/nav/notice/?pageNumber=1');
@@ -153,7 +161,7 @@ router.post('/noticeInsertBoard',function(req,res){
             var date = year + "-" + month + "-" + day;
             console.log(" [ post /noticeInsertBoard in notice.js]  Date :  " + date );
 
-            var query = "INSERT INTO `notice_BBS` (`title`, `contents`, `date`, `view`) VALUES (?, ?, ?, 0)" 
+            var query = "INSERT INTO `notice_BBS` (`title`, `contents`, `date`, `view`) VALUES (?, ?, ?, 0)";
             var exec = connection.query(query, [title, contents, date], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
             res.redirect('/nav/notice/?pageNumber=1');
@@ -183,10 +191,7 @@ router.post('/noticeEditBoard/:seq',function(req,res){
             var date = year + "-" + month + "-" + day;
 
             console.log(" [ post /noticeEditBoard in notice.js]  Date :  " + date );
-              /*
-              Date 추가해주자 
-              View Cnt 추가해주자
-              */ 
+
             var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, date , seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
             res.redirect('/nav/notice/?pageNumber=1');
