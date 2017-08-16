@@ -167,13 +167,17 @@ router.post('/noticeEditBoard/:seq',function(req,res){
           }
           else
           {
-            var date = moment().format('MM/DDahh:mm:ss//');
-            console.log(" [in notice.js]  date :  " + date );
+            var year = moment().format('YYYY');
+            var month = moment().format('MM');
+            var day = moment().format('DD');
+            var date = year + "-" + month + "-" + day;
+
+            console.log(" [in notice.js]  Date :  " + date );
               /*
               Date 추가해주자 
               View Cnt 추가해주자
               */ 
-            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, , seq], function(err, rows) {
+            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, date , seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
             res.redirect('/nav/notice/?pageNumber=1');
         });        
