@@ -104,11 +104,15 @@
                 <td><%= i %></td> 
                 <td id="title" >
                     <a href="/nav/notice/noticeBoard/<%= result[i-1].seq %>">
-                      <%= result[i-1].title%></a> 
+               <% if(result[i-1].title.length > 40){ %>
+                        <%=  result[i-1].title.slice(0,40); %>&nbsp;...&nbsp;
+                        <% }else { %> 
+                            <%= result[i-1].title %>
+                            <% } %></a> 
                   </td>
                 <td>Admin</td>
                 <td><%= result[i-1].date %></td>
-                <td><%= result[i-1].viewCnt %></td>
+                <td><%= result[i-1].view %></td>
             </tr>
           <%  } %>
         </tbody>

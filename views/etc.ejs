@@ -83,8 +83,14 @@
           <div class="thumbnail">
               <a href="/nav/etcBoard/<%= imgList[i-1].seq %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
               <div class="caption">
-                <h4><%= imgList[i-1].title %></h4>
-                <p><%= imgList[i-1].contents %> </p>
+                <h4>Title :
+                <% if(imgList[i-1].title.length > 20){ %>
+                        <%=  imgList[i-1].title.slice(0,20); %>&nbsp;...&nbsp;
+                        <% }else { %> 
+                            <%= imgList[i-1].title %>
+                            <% } %>
+                </h4>
+                <p>Date : <%= imgList[i-1].date %></p>
 
             </div>
           </div>
