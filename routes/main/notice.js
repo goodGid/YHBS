@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const router = express.Router();
-
+const moment = require('moment'); //시간형식 관리용 모듈
 /*
  custom module
 */
@@ -54,10 +54,11 @@ router.get('/' , async function(req,res){
     try{
         var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
+        var sessionValue = req.session.user_id;
         console.log(" [in notice.js]  result.length :  " + result.length );
         console.log(" [in notice.js]  pageNumber :  " + pageNumber );
 
-        res.render('notification', {result: result, pageNumber : pageNumber});        
+        res.render('notification', {result: result, pageNumber : pageNumber,sessionValue : sessionValue});        
 
     }catch(err){
         console.log(err);
@@ -166,7 +167,13 @@ router.post('/noticeEditBoard/:seq',function(req,res){
           }
           else
           {
-            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ? where seq = ?", [title, contents, seq], function(err, rows) {
+            var date = moment().format('MM/DDahh:mm:ss//');
+            console.log(" [in notice.js]  date :  " + date );
+              /*
+              Date 추가해주자 
+              View Cnt 추가해주자
+              */ 
+            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, , seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
             res.redirect('/nav/notice/?pageNumber=1');
         });        

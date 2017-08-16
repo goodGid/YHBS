@@ -115,7 +115,16 @@
       </table> 
     </div>
   </div>
-<p style="text-align : center;"><a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="font-size:15px;">Write</a></p>
+
+  <% if ( sessionValue == "admin") { %>
+    <p style="text-align : center;">
+      <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="font-size:15px;">Write</a>
+    </p>
+  <% } else { %>
+    <p style="text-align : center;">
+        <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="font-size:15px; display: none;">Write</a>
+    </p>
+  <% } %>
     
     <!-- 
         currentPageNumber Sector  

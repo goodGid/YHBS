@@ -26,12 +26,12 @@
     </script>
 </head>
 <body>
-   
-<!--######################################################-->
+        <% if (sessionValue == "admin") { %>
+        <input type="button" onClick= "location.href = '/logout';" value="Logout" class="btn btn-default" style="float:right; text-align:right; font-size:8px;">
+        <% } else { %>
+        <input type="button" onClick= "location.href = '/login';" value="Admin" class="btn btn-default" style="float:right; text-align:right; font-size:8px;">
+        <% } %>
 
-   
-        <input type="button" value="Admin" class="btn btn-default" style="float:right; text-align:right; font-size:8px;">
-    
         <header>
         <% include ./header %>
     </header>
@@ -41,10 +41,10 @@
         <li><img src="/images/front.jpg" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
     </ul>
     <br>
-<!-- ################################################## -->
+
     <p style="font-size : 30px; text-align : center;"><i>'LIFT UP YOUR HEARTS'</i></p>
     <br>
-<!-- ################################################# -->
+
    
     <div class="container" >
         <div class="row" style="margin : 0 auto;">
@@ -82,13 +82,12 @@
             <div class="col-md-16">
             <div class="container" id="tourpackages-carousel">
                 <div class="row">
-                 <% for (var i=0; i<imgList.length; i++) {
-                         var next = imgList.length - i - 1;
-                        if(i == 4)break; %> 
+                 <% for (var i=imgList.length; i > 0; i--) {
+                     if ( i == 4 ) break; %>
                   <div class="col-xs-12 col-sm-3 col-md-3">
                   <div class="thumbnail">
                    <!-- DB에 seq 컬럼 추가해야함 -->
-                    <a href="/nav/etcBoard/<%= imgList[next].seq %>"><img src="<%= imgList[next].imgUrl %>" alt=""></a>
+                    <a href="/nav/etcBoard/<%= imgList[i-1].seq %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
                   </div>
                   </div>
                 <% } %>
@@ -96,8 +95,6 @@
             </div>
            </div></div>
         </div>
-            
-        <!-- ######################################### -->
         <hr />
     </div>
 
