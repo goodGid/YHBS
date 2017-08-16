@@ -50,13 +50,12 @@ function getNoticeList(){
  Method : Get
 */
 router.get('/' , async function(req,res){
-    console.log(" [in notice.js]    here");
     try{
         var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
         var sessionValue = req.session.user_id;
-        console.log(" [in notice.js]  result.length :  " + result.length );
-        console.log(" [in notice.js]  pageNumber :  " + pageNumber );
+        console.log(" [ get / in notice.js]  result.length :  " + result.length );
+        console.log(" [ get / in notice.js]  pageNumber :  " + pageNumber );
 
         res.render('notification', {result: result, pageNumber : pageNumber,sessionValue : sessionValue});        
 
@@ -128,6 +127,10 @@ router.get('/noticeEdit/:seq',function(req,res){
 })
 
 
+
+
+
+
 /*
  Method : Post
 */
@@ -144,14 +147,52 @@ router.post('/noticeInsertBoard',function(req,res){
         }
         else
         {
-          var exec = connection.query("INSERT INTO yhbs.notice_BBS (`title`, `contents`, `date`, `viewCnt`) VALUES (?, ?, '4', '4')", [title, contents], function(err, rows) {
-          connection.release();  // 반드시 해제해야 합니다.
-          res.redirect('/nav/notice/?pageNumber=1');
+            var year = moment().format('YYYY');
+            var month = moment().format('MM');
+            var day = moment().format('DD');
+            var date = year + "-" + month + "-" + day;
+            console.log(" [ post /noticeInsertBoard in notice.js]  Date :  " + date );
+
+            var query = "INSERT INTO `notice_BBS` (`title`, `contents`, `date`, `view`) VALUES (?, ?, ?, 0)" 
+            var exec = connection.query(query, [title, contents, date], function(err, rows) {
+            connection.release();  // 반드시 해제해야 합니다.
+            res.redirect('/nav/notice/?pageNumber=1');
       });        
   }})
   
 })
 
+
+router.post('/noticeEditBoard/:seq',function(req,res){
+    pool.getConnection(function(error, connection)
+      {
+          var seq = req.params.seq;
+          var title = req.body.title;
+          var contents = req.body.contents;
+          if(error)
+          {
+            console.log("database error");
+            res.status(503).send({result:"fail"});
+            connection.release();
+          }
+          else
+          {
+            var year = moment().format('YYYY');
+            var month = moment().format('MM');
+            var day = moment().format('DD');
+            var date = year + "-" + month + "-" + day;
+
+            console.log(" [ post /noticeEditBoard in notice.js]  Date :  " + date );
+              /*
+              Date 추가해주자 
+              View Cnt 추가해주자
+              */ 
+            var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, date , seq], function(err, rows) {
+            connection.release();  // 반드시 해제해야 합니다.
+            res.redirect('/nav/notice/?pageNumber=1');
+        });        
+    }})
+})
 
 router.post('/noticeEditBoard/:seq',function(req,res){
     pool.getConnection(function(error, connection)
