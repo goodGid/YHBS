@@ -90,11 +90,6 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-        <% totalCnt = result.length; barCnt = 0; %>
-         <% for(var i=0; i< result.length;i++){ 
-                var next = result.length - i - 1 %>
-=======
         
         <% var totalCnt = result.length; %>
         <% var contentsCntPerOnePage = 7; %>
@@ -103,7 +98,6 @@
 
          <% for(var i = totalCnt - 7 * (pageNumber * 1 - 1 ) ; i > totalCnt - 7 * (pageNumber * 1 ); i--){ 
           if (i <= 0 ) break; %>
->>>>>>> ed278ddeb95c3543a23532549eea469e9384f6fb
             <tr>
                 <td><%= i %></td> 
                 <td id="title" >
@@ -120,31 +114,11 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-  <div style="text-align:center;">
-   <div id="container" style="margin:0 auto;">
-     <ul  class="pagination">
-       <li><a href="#"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-        <% for(var i=0; i<result.length / 7;i++){ %>
-            <li>
-             <a href="/nav/notice/"><%= parseInt(result.length / 7) + i%></a>
-            </li>
-        <%}%>
-       <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-       </ul>
-       
-       <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Write</a>
-       
-    </div>
-    </div>
-=======
-
     <!-- 
         currentPageNumber Sector  
                                   -->
     <% include ./currentPageNumber %>
     <a href="/nav/notice/noticeInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:8px;">Write</a>
->>>>>>> ed278ddeb95c3543a23532549eea469e9384f6fb
     
     <footer>
         <% include ./footer %>
