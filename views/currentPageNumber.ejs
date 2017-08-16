@@ -8,7 +8,7 @@
 
             <!-- 
               Previous Button
-            -->
+                              -->
             <% if (  parseInt( pageNumber / 5 ) == 0) { %>
               <li><a href="/nav/<%= currentCategory %>/?pageNumber=1"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
             <% } else {%>
@@ -17,7 +17,7 @@
   
             <!-- 
               Current PageNumber 
-            -->
+                                -->
             <% if( totalCnt / 5 * contentsCntPerOnePage > 0 ) {
               if ( pageNumber % 5 == 0 ) {pageNumber = pageNumber - 5;}
               for(var i = 5 * parseInt( pageNumber / 5 ) ; i < 5 * parseInt( pageNumber / 5 ) + 5; i++) { 
@@ -38,7 +38,7 @@
 
            <!-- 
               Next Button
-          -->
+                          -->
           <% if ( parseInt( pageNumber / 5 ) * 5 + 5  <= parseInt(pageBarNumber+1) ) { %>
             <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt( pageNumber / 5 ) * 5 + 5  + 1  %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
           <% } else { %>
