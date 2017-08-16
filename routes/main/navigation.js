@@ -50,6 +50,51 @@ function getThumbnailList(category){
     });
 }
 
+function getThumbnailEdit(category, seq){
+    return new Promise(function(resolve, reject){
+        pool.getConnection(function(err, connection){
+            if(err) reject(err);
+            else {
+                connection.query("select * from img_BBS where category = ? and seq = ? ", [category, seq], function(err, rows){
+                    connection.release();
+                    if(err) reject(err);
+                    else resolve(rows);
+                });
+            }
+        });
+    });
+}
+/* insert 구현 해줘야 함 */
+function insertThumbnail(category, seq){
+    return new Promise(function(resolve, reject){
+        pool.getConnection(function(err, connection){
+            if(err) reject(err);
+            else {
+                connection.query('delete from img_bbs where category = ? and seq = ?', [category, seq], function(err, rows){
+                    connection.release();
+                    if(err) reject(err);
+                    else resolve(rows);
+                });
+            }
+        });
+    });
+}
+
+function deleteThumbnail(category, seq){
+    return new Promise(function(resolve, reject){
+        pool.getConnection(function(err, connection){
+            if(err) reject(err);
+            else {
+                connection.query('delete from img_bbs where category = ? and seq = ?', [category, seq], function(err, rows){
+                    connection.release();
+                    if(err) reject(err);
+                    else resolve(rows);
+                });
+            }
+        });
+    });
+}
+//////////////////////////////////////////////////////////////////////
 function getNoticeList(){
     return new Promise(function(resolve, reject){
         pool.getConnection(function(err, connection){
@@ -65,7 +110,7 @@ function getNoticeList(){
     });
 }
 
-
+///////////////////////////////////////////////////////////////////////
 /*
  Method : Get
 */
@@ -89,16 +134,6 @@ router.get('/facility',function(req,res){
     res.render('facility');
 });
 
-router.get('/grade', async function(req, res){
-    try{
-        var imageList = await getThumbnailList("grade");
-        res.render('grade', {imgList: imageList});        
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }
-});
-
 router.get('/introduce',function(req,res){
         res.render('introduce');
 });
@@ -107,18 +142,12 @@ router.get('/location',function(req,res){
     res.render('location');
 });
 
-router.get('/nursery',async function(req,res){
-    try{
-        var imageList = await getThumbnailList("nursery");
-        res.render('nursery', {imgList: imageList});        
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }
-});
-
 router.get('/policy',function(req,res){
     res.render('policy');
+});
+
+router.get('/uniform',function(req,res){
+    res.render('uniform');
 });
 
 router.get('/staff', async function(req,res){
@@ -131,8 +160,24 @@ router.get('/staff', async function(req,res){
     }
 });
 
-router.get('/uniform',function(req,res){
-    res.render('uniform');
+router.get('/grade', async function(req, res){
+    try{
+        var imageList = await getThumbnailList("grade");
+        res.render('grade', {imgList: imageList});        
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }
+});
+
+router.get('/nursery',async function(req,res){
+    try{
+        var imageList = await getThumbnailList("nursery");
+        res.render('nursery', {imgList: imageList});        
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }
 });
 
 router.get('/volunteer', async function(req,res){
@@ -153,6 +198,61 @@ router.get('/etc', async function(req,res){
         console.log(err);
         res.status(503).send({result: "fail"});
     }
+});
+
+router.get('/etc/:seq', async function(req,res){
+    try{
+        var seq = req.params.seq;
+        var imageList = await getThumbnailEdit("etc", seq);
+        res.render('etcEditBoard', {result: imageList});   
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }    
+});
+
+router.get('/etcBoard/:seq', async function(req,res){
+    try{
+        var seq = req.params.seq;
+        var imageList = await getThumbnailEdit("etc", seq);
+        res.render('etcBoard', {result: imageList});   
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }    
+});
+
+router.get('/etcEditBoard/:seq', async function(req,res){
+    try{
+        var seq = req.params.seq;
+        var imageList = await getThumbnailEdit("etc", seq);
+        res.render('etcEditBoard', {result: imageList});   
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }    
+});
+//post 방식으로 etcEditBoard 구현해야함.
+//insert 구현가능해
+router.get('/etcInsertBoard', async function(req,res){
+    try{
+        var insertImg = await insertThumbnail("etc", seq);
+        res.redirect('/nav/etc');   
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }    
+});
+
+router.get('/etcDelete/:seq', async function(req,res){
+    try{
+        var seq = req.params.seq;
+        var deleteImg = await deleteThumbnail("etc", seq);
+        res.redirect('/nav/etc');   
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }    
 });
 
 module.exports = router;

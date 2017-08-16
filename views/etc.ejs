@@ -69,13 +69,13 @@
 
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-          <% for (var i=0; i<imgList.length; i++) {%>  
+          <% for (var i= imgList.length -1 ; i>= 0; i--) {%>  
           <div class="col-xs-18 col-sm-6 col-md-4">
           <div class="thumbnail">
-            <img src="<%= imgList[i].imgUrl %>" alt="">
+            <a href="/nav/etcBoard/<%= imgList[i].seq %>"><img src="<%= imgList[i].imgUrl %>" alt=""></a>
               <div class="caption">
-                <h4> tmp Title</h4>
-                <p> tmp Contents : test </p>
+                <h4>Title : <%= imgList[i].title %></h4>
+                <p>Date : <%= imgList[i].date %></p>
             </div>
           </div>
         </div>
@@ -94,6 +94,9 @@
        <li><a href="#">5</a></li>
        <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
      </ul>
+     
+       <a href="/nav/etcInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:20px;">Write</a>
+       
     </div> 
 
 

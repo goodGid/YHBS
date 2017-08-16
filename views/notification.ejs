@@ -94,7 +94,7 @@
         </thead>
         <tbody>
         <% totalCnt = result.length; barCnt = 0; %>
-         <% for(var i=0; i< 3;i++){ 
+         <% for(var i=0; i< result.length;i++){ 
                 var next = result.length - i - 1 %>
             <tr>
               <td><%= result.length - i %></td>
@@ -118,7 +118,7 @@
        <li><a href="#"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
         <% for(var i=0; i<result.length / 7;i++){ %>
             <li>
-             <a href="/nav/notice/"><%= parseInt(result.length / 7) - i + 1%></a>
+             <a href="/nav/notice/"><%= parseInt(result.length / 7) + i%></a>
             </li>
         <%}%>
        <li><a href="#"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
