@@ -67,15 +67,24 @@
         <% include ./header %>
     </header>
 
+        <% var totalCnt = imgList.length; %>
+        <% var contentsCntPerOnePage = 9; %>
+        <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
+        <% var currentCategory = "etc"; %>
+
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-          <% for (var i= imgList.length -1 ; i>= 0; i--) {%>  
+ 
+ 
+                     <% for(var i = totalCnt - contentsCntPerOnePage * (pageNumber * 1 - 1 ) ; i > totalCnt - contentsCntPerOnePage * (pageNumber * 1 ); i--){ 
+            if (i <= 0 ) break; %>   
           <div class="col-xs-18 col-sm-6 col-md-4">
           <div class="thumbnail">
-            <a href="/nav/etcBoard/<%= imgList[i].seq %>"><img src="<%= imgList[i].imgUrl %>" alt=""></a>
+              <a href="/nav/etcBoard/<%= imgList[i-1].seq %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
               <div class="caption">
-                <h4>Title : <%= imgList[i].title %></h4>
-                <p>Date : <%= imgList[i].date %></p>
+                <h4><%= imgList[i-1].title %></h4>
+                <p><%= imgList[i-1].contents %> </p>
+
             </div>
           </div>
         </div>
@@ -98,6 +107,14 @@
        <a href="/nav/etcInsertBoard" class="btn btn-default"  style="float:right; text-align:right; font-size:20px;">Write</a>
        
     </div> 
+=======
+
+
+    <!-- 
+        currentPageNumber Sector  
+                                  -->
+       <% include ./currentPageNumber %>
+>>>>>>> ed278ddeb95c3543a23532549eea469e9384f6fb
 
 
     <footer>

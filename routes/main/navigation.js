@@ -134,6 +134,21 @@ router.get('/facility',function(req,res){
     res.render('facility');
 });
 
+router.get('/grade/:pageNumber', async function(req, res){
+    try{
+        var imageList = await getThumbnailList("grade");
+        var pageNumber = req.params.pageNumber;
+
+        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
+        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
+
+        res.render('grade', {imgList: imageList,pageNumber : pageNumber});        
+    }catch(err){
+        console.log(err);
+        res.status(503).send({result: "fail"});
+    }
+});
+
 router.get('/introduce',function(req,res){
         res.render('introduce');
 });
@@ -189,26 +204,21 @@ router.get('/volunteer', async function(req,res){
         res.status(503).send({result: "fail"});
     }
 });
-
+//
 router.get('/etc', async function(req,res){
+        console.log(" [in navigation.js]  2222 :  " ); 
     try{
         var imageList = await getThumbnailList("etc");
-        res.render('etc', {imgList: imageList});        
+        var pageNumber = req.query.pageNumber;
+
+        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
+        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
+
+        res.render('etc', {imgList: imageList, pageNumber : pageNumber});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
     }
-});
-
-router.get('/etc/:seq', async function(req,res){
-    try{
-        var seq = req.params.seq;
-        var imageList = await getThumbnailEdit("etc", seq);
-        res.render('etcEditBoard', {result: imageList});   
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }    
 });
 
 router.get('/etcBoard/:seq', async function(req,res){
@@ -232,6 +242,7 @@ router.get('/etcEditBoard/:seq', async function(req,res){
         res.status(503).send({result: "fail"});
     }    
 });
+
 //post 방식으로 etcEditBoard 구현해야함.
 //insert 구현가능해
 router.get('/etcInsertBoard', async function(req,res){
@@ -248,7 +259,7 @@ router.get('/etcDelete/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
         var deleteImg = await deleteThumbnail("etc", seq);
-        res.redirect('/nav/etc');   
+        res.redirect('/nav/etc/?pageNumber=1');   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
