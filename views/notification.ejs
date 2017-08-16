@@ -93,6 +93,9 @@
         <% var totalCnt = result.length; %>
         <% var contentsCntPerOnePage = 7; %>
         <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
+        <% if ( totalCnt % contentsCntPerOnePage == 0 ) {
+          pageBarNumber -= 1;
+        } %>
         <% var currentCategory = "notice"; %>
 
          <% for(var i = totalCnt - 7 * (pageNumber * 1 - 1 ) ; i > totalCnt - 7 * (pageNumber * 1 ); i--){ 

@@ -49,7 +49,6 @@ function getNoticeList(){
 /*
  Method : Get
 */
-
 router.get('/' , async function(req,res){
     console.log(" [in notice.js]    here");
     try{
@@ -89,7 +88,6 @@ router.get('/noticeInsertBoard',function(req,res){
     res.render('noticeInsertBoard');
 })
 
-
 router.get('/noticeDelete/:seq',function(req,res){
     pool.getConnection(function(error, connection)
       {
@@ -104,7 +102,7 @@ router.get('/noticeDelete/:seq',function(req,res){
           {
             var exec = connection.query("delete from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice');
+            res.redirect('/nav/notice/?pageNumber=1');
         });        
     }})
 })
@@ -123,7 +121,7 @@ router.get('/noticeEdit/:seq',function(req,res){
           {
             var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeEditBoard', {result : rows});
+            res.render('noticeEditBoard/?pageNumber=1', {result : rows});
         });        
     }})
 })
@@ -175,26 +173,6 @@ router.post('/noticeEditBoard/:seq',function(req,res){
         });        
     }})
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
