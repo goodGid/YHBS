@@ -64,11 +64,12 @@ function getImgList(){
 }
 
 router.get('/', async function(req,res){
-    
     try{
         var result = await getNoticeList();
         var imgList = await getImgList();
-        res.render('index', {result: result, imgList : imgList});        
+        var sessionValue = req.session.user_id;
+        
+        res.render('index', {result: result, imgList : imgList, sessionValue : sessionValue});        
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});

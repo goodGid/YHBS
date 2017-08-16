@@ -19,15 +19,32 @@
               for(var i = 5 * parseInt( pageNumber / 5 ) ; i < 5 * parseInt( pageNumber / 5 ) + 5; i++) { 
                 var loopChk = totalCnt - parseInt( contentsCntPerOnePage * i ) ;
                 if ( loopChk <= 0 ) break;  %>
-                    <li>
+
+                <% if ( i+1 == pageNumber){ %>
+                  <li class="active">
                     <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
-                   </li>
-               <% }
-              } else { 
-                for(var i = 0 ; i < 5; i++){ %>
+                  </li>
+                <% } else { %>
                   <li>
                     <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
-                   </li>
+                  </li>
+                <% } %>
+                    
+               <% }
+
+              } else { 
+                for(var i = 0 ; i < 5; i++){ %>
+
+                  <% if ( i+1 == pageNumber){ %>
+                    <li class="active">
+                      <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
+                    </li>
+                  <% } else { %>
+                    <li>
+                      <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
+                    </li>
+                  <% } %>
+                    
                 <% } %>
            <% } %>
   
