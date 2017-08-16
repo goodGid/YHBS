@@ -35,6 +35,7 @@
            <!-- 
               Next Button
                           -->
+                          <%= pageBarNumber %>
           <% if ( parseInt( pageNumber / 5 ) * 5 + 5  <= parseInt(pageBarNumber+1) ) { %>
             <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt( pageNumber / 5 ) * 5 + 5  + 1  %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
           <% } else { %>

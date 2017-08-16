@@ -70,6 +70,9 @@
         <% var totalCnt = imgList.length; %>
         <% var contentsCntPerOnePage = 9; %>
         <% var pageBarNumber = parseInt(totalCnt /contentsCntPerOnePage) ; %>
+        <% if ( totalCnt % contentsCntPerOnePage == 0 ) {
+            pageBarNumber -= 1;
+          } %>
         <% var currentCategory = "etc"; %>
 
     <div class="container" id="tourpackages-carousel">
