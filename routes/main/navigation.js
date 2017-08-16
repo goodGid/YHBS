@@ -103,6 +103,10 @@ router.get('/introduce',function(req,res){
         res.render('introduce');
 });
 
+router.get('/greetings',function(req,res){
+        res.render('greetings');
+});
+
 router.get('/location',function(req,res){
     res.render('location');
 });
