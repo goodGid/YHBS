@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var router = express.Router();
 const moment = require('moment'); //시간형식 관리용 모듈
+var aws=require('aws-sdk');
+var multer=require('multer');
+var multerS3=require('multer-s3');
 /*
  custom module
 */
@@ -29,6 +32,20 @@ var pool = mysql.createPool({
   database : db_config.database,
   connectionLimit : db_config.connectionLimit,
   debug : false
+});
+
+aws.config.loadFromPath('./config/aws_config.json');
+
+var s3 = new aws.S3();
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'yhbs',
+    acl: 'public-read',
+    key: function(req, file, cb){
+      cb(null,Date.now() + '.'+ file.originalname.split('.').pop());
+    }
+  })
 });
 
 /*
@@ -246,14 +263,9 @@ router.get('/etcEditBoard/:seq', async function(req,res){
 });
 
 
-router.get('/etcInsertBoard', async function(req,res){
-    try{
-        var insertImg = await insertThumbnail("etc", seq);
-        res.redirect('/nav/etc/?pageNumber = 1');   
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }    
+router.get('/etcInsertBoard', function(req,res){
+    res.render('etcInsertBoard');
+});    
 
 
 
@@ -269,21 +281,24 @@ router.get('/etcDelete/:seq', async function(req,res){
 });
 
 
-/*
- Method : Post
-*/
-
-router.post('/editInsertBoard/:seq',upload.single('pic'), function(req, res){
-    try{
-        var imageList = await getThumbnailList("etc");
-        var imgUrlFromS3 = req.file.location;
-
-        var seq = req.params.seq;
-        var title = req.body.title;
-        var contents = req.body.contents;
-
+router.post('/etcInsertBoard',upload.single('pic'), async function(req, res){
+    var imageList =  await getThumbnailList("etc");
+    var imgUrlFromS3 = req.file.location;
+    
+    var title = req.body.title;
+    var contents = req.body.contents;
+    var sessionValue = req.session.user_id;
+    pool.getConnection(function(error, connection)
+    {
+        if(error)
+        {
+          console.log("database error");
+          res.status(503).send({result:"fail"});
+          connection.release();
+        }
+        else
+        {
         console.log(" [ post /editInsertBoard in navigation.js]  imageList.length :  " + imageList.length );
-        console.log(" [ post /editInsertBoard in navigation.js]  pageNumber :  " + pageNumber );
 
         var year = moment().format('YYYY');
         var month = moment().format('MM');
@@ -293,40 +308,50 @@ router.post('/editInsertBoard/:seq',upload.single('pic'), function(req, res){
         var query = "INSERT INTO `img_BBS` (`imgUrl`,`category`, `date`, `title`, `contents`) VALUES (?, ?, ?, ?, ?)";
         var exec = connection.query(query, [imgUrlFromS3, "etc", date, title, contents], function(err, rows) {
         connection.release();  // 반드시 해제해야 합니다.
-        res.render('etc', {imgList: imageList, pageNumber : pageNumber});
-  });        
-      }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }    
-
+        res.render('etc', {imgList: imageList,sessionValue : sessionValue, pageNumber : "1"});
+             });        
+        }
+    });
 });
 
-router.post('/etcEditBoard/:seq',upload.single('pic'), function(req, res){
-    try{
-        var imageList = await getThumbnailList("etc");
-        var imgUrlFromS3 = req.file.location;
+router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
+    var imageList =  await getThumbnailList("etc");
+    var imgUrlFromS3 = req.file.location;
+    var seq = req.params.seq;
+    var title = req.body.title;
+    var contents = req.body.contents;
+    var sessionValue = req.session.user_id;
 
-        var seq = req.params.seq;
-        var title = req.body.title;
-        var contents = req.body.contents;
+    pool.getConnection(function(error, connection)
+    {
+        if(error)
+        {
+          console.log("database error");
+          res.status(503).send({result:"fail"});
+          connection.release();
+        }
+        else
+        {
+            console.log(" [ post /etcEditBoard in navigation.js]  imageList.length :  " + imageList.length );
 
-        console.log(" [ post /etcEditBoard in navigation.js]  imageList.length :  " + imageList.length );
-        console.log(" [ post /etcEditBoard in navigation.js]  pageNumber :  " + pageNumber );
+        var year = moment().format('YYYY');
+        var month = moment().format('MM');
+        var day = moment().format('DD');
+        var date = year + "-" + month + "-" + day;
 
         var query = "UPDATE img_BBS set imgUrl = ?, title = ?, contents = ? where seq = ?";
         var exec = connection.query(query, [imgUrlFromS3, title, contents], function(err, rows) {
         connection.release();  // 반드시 해제해야 합니다.
-        res.render('etc', {imgList: imageList, pageNumber : pageNumber});        
-  });        
-    }catch(err){
-        console.log(err);
-        res.status(503).send({result: "fail"});
-    }    
-    
+        res.render('etc', {imgList: imageList,sessionValue : sessionValue, pageNumber : "1"});
+             });        
+        }
+    });
 });
+
+
 
 
 
 
 module.exports = router;
+
