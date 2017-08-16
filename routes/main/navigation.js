@@ -89,10 +89,10 @@ router.get('/facility',function(req,res){
     res.render('facility');
 });
 
-router.get('/grade/:pageNumber', async function(req, res){
+router.get('/grade', async function(req, res){
     try{
         var imageList = await getThumbnailList("grade");
-        var pageNumber = req.params.pageNumber;
+        var pageNumber = req.query.pageNumber;
 
         console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
         console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
@@ -150,10 +150,10 @@ router.get('/volunteer', async function(req,res){
     }
 });
 
-router.get('/etc/:pageNumber', async function(req,res){
+router.get('/etc', async function(req,res){
     try{
         var imageList = await getThumbnailList("etc");
-        var pageNumber = req.params.pageNumber;
+        var pageNumber = req.query.pageNumber;
 
         console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
         console.log(" [in navigation.js]  pageNumber :  " + pageNumber );

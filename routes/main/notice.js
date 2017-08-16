@@ -50,15 +50,13 @@ function getNoticeList(){
  Method : Get
 */
 
-router.get('/?pageNumber' , async function(req,res){
+router.get('/' , async function(req,res){
     console.log("in notice.js    here");
     try{
         var pageNumber = req.query.pageNumber;
         var result = await getNoticeList();
         console.log(" [in notice.js]  result.length :  " + result.length );
         console.log(" [in notice.js]  pageNumber :  " + pageNumber );
-
-
 
         res.render('notification', {result: result, pageNumber : pageNumber});        
 
