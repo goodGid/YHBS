@@ -244,7 +244,8 @@ router.get('/etcBoard/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
         var imageList = await getThumbnailEdit("etc", seq);
-        res.render('etcBoard', {result: imageList});   
+        var sessionValue = req.session.user_id;
+        res.render('etcBoard', {result: imageList, sessionValue : sessionValue});   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});

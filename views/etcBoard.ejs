@@ -32,7 +32,7 @@
                  <li>Date</li>
                  <li><%= result[0].date %></li>
               </ul><hr>
-              <img src="<%= result[0].imgUrl %>"><br>
+              <img src="<%= result[0].imgUrl %>" width="70%" height="70%"><br>
               <hr><br>
               <p><%= result[0].contents %></p>
               
@@ -42,8 +42,12 @@
               <a class="btn btn-default btn-lg" href="/nav/etc/?pageNumber=1"><i class="icon-ok">Back&nbsp;</i></a>
               <div style="text-align:right; float:right">
               <div style="margin:0 auto">
-              <a class="btn btn-default btn-lg" href="/nav/etcDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
-              <a class="btn btn-default btn-lg" href="/nav/etcEditBoard/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              <% if ( sessionValue == "admin") { %>
+                <a class="btn btn-default btn-lg" href="/nav/etcDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
+                <a class="btn btn-default btn-lg" href="/nav/etcEditBoard/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+              <% } else { %>
+              <% } %>
+              
               </div></div>
            </div>
         </div>
