@@ -20,7 +20,7 @@
     
      <script language="javaScript">
          function check(){
-             if(document.form.title.value=="" || document.form.contents.value==""){
+             if(document.form.title.value=="" || document.form.contents.value=="" || document.form.pic.value ==""){
                     alert("Please fill in the blanks.");
              }else{
                  form.submit();
@@ -49,40 +49,37 @@
         top: 0px;
     }
     </style>
-   
-    
-    <div class="container">
-        <div class="row">
-            <form action="/nav/etcEditBoard/<%= result[0].seq %>" method="post" name="form" role="form" id="contact-form" class="contact-form">
-                <div class="row">
-                    <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title" value="<%= result[0].title %>">
-                    </div>
-                </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                        <!-- Empty Bar -->
-                    </div>
-                </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    <div class="form-group">
-                        <textarea class="form-control textarea" rows="3" name="contents" id="contents" placeholder="Contents"><%= result[0].contents %></textarea>
-                    </div>
-                </div>
-                </div>
-                <div class="row">
-                <div class="col-md-12">
-                  <input type="button" class="btn main-btn pull-right" onclick="check();" value="Finished writing"></button>
-                  </div>
-              </div>
-            </form>
-        </div>
-    </div><br><br><br>
-    
 
+    <div class="container">
+            <div class="row">
+                <form action="/nav/etcEditBoard/<%= seq %>" method="post" name="form" role="form" id="contact-form" class="contact-form" enctype="multipart/form-data">
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title">
+                        </div>
+                    </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="file" name="pic" accept="image/*" />
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <textarea class="form-control textarea" rows="3" name="contents" id="contents" placeholder="Contents"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                      <input type="button" class="btn main-btn pull-right" onclick="check();" value="Finished writing"></button>
+                      </div>
+                  </div>
+                </form>
+            </div>
+        </div><br><br><br>
 
     <footer>
         <% include ./footer %>

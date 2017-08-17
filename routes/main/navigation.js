@@ -255,7 +255,7 @@ router.get('/etcEditBoard/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
         var imageList = await getThumbnailEdit("etc", seq);
-        res.render('etcEditBoard', {result: imageList});   
+        res.render('etcEditBoard', {result: imageList, seq : seq});   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -317,6 +317,7 @@ router.post('/etcInsertBoard',upload.single('pic'), async function(req, res){
 router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
     var imageList =  await getThumbnailList("etc");
     var imgUrlFromS3 = req.file.location;
+    
     var seq = req.params.seq;
     var title = req.body.title;
     var contents = req.body.contents;
@@ -334,15 +335,10 @@ router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
         {
             console.log(" [ post /etcEditBoard in navigation.js]  imageList.length :  " + imageList.length );
 
-        var year = moment().format('YYYY');
-        var month = moment().format('MM');
-        var day = moment().format('DD');
-        var date = year + "-" + month + "-" + day;
-
         var query = "UPDATE img_BBS set imgUrl = ?, title = ?, contents = ? where seq = ?";
-        var exec = connection.query(query, [imgUrlFromS3, title, contents], function(err, rows) {
+        var exec = connection.query(query, [imgUrlFromS3, title, contents, seq], function(err, rows) {
         connection.release();  // 반드시 해제해야 합니다.
-        res.render('etc', {imgList: imageList,sessionValue : sessionValue, pageNumber : "1"});
+        res.render('etc', {imgList: imageList, sessionValue : sessionValue, pageNumber : "1"});
              });        
         }
     });

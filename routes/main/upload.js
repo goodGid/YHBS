@@ -20,7 +20,7 @@ var pool = mysql.createPool({
   debug : false
 });
 
-aws.config.loadFromPath('./config/aws_config.json');
+// aws.config.loadFromPath('./config/aws_config.json');
 
 var s3 = new aws.S3();
 var upload = multer({
@@ -53,12 +53,30 @@ router.get('/',function(req,res){
 */
 
 
-router.post('/upload',upload.single('pic'), function(req, res)
+// router.post('/upload',upload.single('pic'), function(req, res)
+router.post('/upload', function(req, res)
 {
-  var imgUrlFromS3 = req.file.location;
+  var imgUrlFromS3 = "testimg.png";
   var title = req.body.title;
-  console.log(" upload test : "+ imgUrlFromS3 + " ///" + title);
-  res.end();
+  var contents = req.body.contents;
+  pool.getConnection(function(error, connection)
+  {
+      if(error)
+      {
+        console.log("database error");
+        res.status(503).send({result:"fail"});
+        connection.release();
+      }
+      else
+      {
+        var query = "UPDATE img_BBS set imgUrl = ?, title = ?, contents = ? where title = ?";
+      var exec = connection.query(query, [imgUrlFromS3, title, contents,"1234"], function(err, rows) {
+      connection.release();  // 반드시 해제해야 합니다.
+      res.end();
+
+           });
+      }
+  });
 });
 
 
