@@ -62,16 +62,4 @@ router.post('/upload',upload.single('pic'), function(req, res)
 });
 
 
-router.post('/upload222', upload.any(),function(req, res, next)
-{
-
-  
-  var imgUrlFromS3 = req.file.location;
-  console.log(" upload is here ");
-  var title = req.body.title;
-
-  console.log(" upload test : "+ imgUrlFromS3 + " ///" + title);
-
-  res.end();
-});
 module.exports = router;
