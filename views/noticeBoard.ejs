@@ -34,12 +34,12 @@
               <h3>&nbsp;</h3>
               <hr>
              
-              <a class="btn btn-default btn-lg" href="/nav/notice/?pageNumber=1"><i class="icon-ok">Back&nbsp;</i></a>
+              <a class="btn btn-default btn-lg" href="/nav/notice/?pageNumber=<%= pageNumber %>"><i class="icon-ok">Back&nbsp;</i></a>
               <div style="text-align:right; float:right">
               <div style="margin:0 auto">
               <% if ( sessionValue == "admin") { %>
-                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>"><i class="icon-ok">Remove&nbsp;</i></a>
-                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>"><i class="icon-ok">Edit&nbsp;</i></a>
+                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeDelete/<%= result[0].seq %>/?pageNumber=<%= pageNumber %>"><i class="icon-ok">Remove&nbsp;</i></a>
+                  <a class="btn btn-default btn-lg" href="/nav/notice/noticeEdit/<%= result[0].seq %>/?pageNumber=<%= pageNumber %>"><i class="icon-ok">Edit&nbsp;</i></a>
               <% } else { %>
               <% } %>
               </div></div>

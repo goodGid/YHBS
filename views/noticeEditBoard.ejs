@@ -52,7 +52,7 @@
     
     <div class="container">
         <div class="row">
-            <form action="/nav/notice/noticeEditBoard/<%= result[0].seq %>" method="post" name="form" role="form" id="contact-form" class="contact-form">
+            <form action="/nav/notice/noticeEditBoard/<%= result[0].seq %> %>/?pageNumber=<%= pageNumber %>" method="post" name="form" role="form" id="contact-form" class="contact-form">
                 <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
@@ -61,8 +61,6 @@
                 </div>
                     <div class="col-md-6">
                     <div class="form-group">
-                        <!-- 여기다 지금파일의 경로 placeholder.
-                            그리고 upload 로직 구현해야함. -->
                     </div>
                 </div>
                 </div>

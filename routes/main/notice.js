@@ -69,7 +69,9 @@ router.get('/noticeBoard/:seq', function(req,res){
      pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;
+          var pageNumber = req.query.pageNumber;
           var sessionValue = req.session.user_id;
+
           if(error)
           {
             console.log("database error");
@@ -87,7 +89,7 @@ router.get('/noticeBoard/:seq', function(req,res){
                     var secondExec = connection.query(secondQuery, [tmpViewCnt, seq], function(err, rows) {
                     });        
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeBoard', {result : rows, sessionValue : sessionValue });
+            res.render('noticeBoard', {result : rows, sessionValue : sessionValue, pageNumber : pageNumber });
         });        
     }})
 });
@@ -100,6 +102,7 @@ router.get('/noticeDelete/:seq',function(req,res){
     pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;
+          var pageNumber = req.query.pageNumber;
           if(error)
           {
             console.log("database error");
@@ -111,7 +114,7 @@ router.get('/noticeDelete/:seq',function(req,res){
             
             var exec = connection.query("delete from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice/?pageNumber=1');
+            res.redirect('/nav/notice/?pageNumber='+pageNumber);
         });        
     }})
 })
@@ -120,6 +123,7 @@ router.get('/noticeEdit/:seq',function(req,res){
     pool.getConnection(function(error, connection)
       {
           var seq = req.params.seq;
+          var pageNumber = req.query.pageNumber;
           if(error)
           {
             console.log("database error");
@@ -130,7 +134,7 @@ router.get('/noticeEdit/:seq',function(req,res){
           {
             var exec = connection.query("select * from notice_BBS where seq = ?", [seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.render('noticeEditBoard',{result : rows});
+            res.render('noticeEditBoard',{result : rows , pageNumber : pageNumber});
         });        
     }})
 })
@@ -178,6 +182,7 @@ router.post('/noticeEditBoard/:seq',function(req,res){
           var seq = req.params.seq;
           var title = req.body.title;
           var contents = req.body.contents;
+          var pageNumber = req.query.pageNumber;
           if(error)
           {
             console.log("database error");
@@ -195,7 +200,7 @@ router.post('/noticeEditBoard/:seq',function(req,res){
 
             var exec = connection.query("UPDATE notice_BBS SET title = ?, contents = ?, date = ? where seq = ?", [title, contents, date , seq], function(err, rows) {
             connection.release();  // 반드시 해제해야 합니다.
-            res.redirect('/nav/notice/?pageNumber=1');
+            res.redirect('/nav/notice/?pageNumber='+pageNumber);
         });        
     }})
 })

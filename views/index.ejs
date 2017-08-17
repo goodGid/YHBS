@@ -37,8 +37,10 @@
     </header>
 
     <ul class="bxslider">
-        <li><img src="/images/tmpFront.jpg" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
-        <li><img src="/images/tmpFront.jpg" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
+        <li><img src="/images/bxSlide_1.png" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
+        <li><img src="/images/bxSlide_2.png" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
+        <li><img src="/images/bxSlide_3.png" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
+        <li><img src="/images/bxSlide_4.png" width="700px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"/></li>
     </ul>
     <br>
 
@@ -65,7 +67,7 @@
                     <tr>
                       <td style="text-align : center;"><%= result.length - i %></td>
                       <td id="title">
-                        <a href="/nav/notice/noticeBoard/<%= result[next].seq %>" >
+                        <a href="/nav/notice/noticeBoard/<%= result[next].seq %>/?pageNumber=1" >
                         <% if(result[next].title.length > 20){ %>
                         <%=  result[next].title.slice(0,25); %>...&nbsp;
                         <% }else { %> 
@@ -87,7 +89,7 @@
                   <div class="col-xs-12 col-sm-3 col-md-3">
                   <div class="thumbnail">
                    <!-- DB에 seq 컬럼 추가해야함 -->
-                    <a href="/nav/etcBoard/<%= imgList[i-1].seq %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
+                    <a href="/nav/etcBoard/<%= imgList[i-1].seq %>/?pageNumber=1"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
                   </div>
                   </div>
                 <% } %>

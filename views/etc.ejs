@@ -81,8 +81,8 @@
             if (i <= 0 ) break; %>   
           <div class="col-xs-18 col-sm-6 col-md-4">
           <div class="thumbnail">
-              <a href="/nav/etcBoard/<%= imgList[i-1].seq %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
-              <div class="caption">
+              <a href="/nav/etcBoard/<%= imgList[i-1].seq %>/?pageNumber=<%= pageNumber %>"><img src="<%= imgList[i-1].imgUrl %>" alt=""></a>
+              <div class="caption" align="center">
                 <h4>Title :
                 <% if(imgList[i-1].title.length > 20){ %>
                         <%=  imgList[i-1].title.slice(0,20); %>&nbsp;...&nbsp;

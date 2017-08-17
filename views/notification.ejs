@@ -103,7 +103,7 @@
             <tr>
                 <td><%= i %></td> 
                 <td id="title" >
-                    <a href="/nav/notice/noticeBoard/<%= result[i-1].seq %>">
+                    <a href="/nav/notice/noticeBoard/<%= result[i-1].seq %>/?pageNumber=<%= pageNumber %>">
                <% if(result[i-1].title.length > 40){ %>
                         <%=  result[i-1].title.slice(0,40); %>&nbsp;...&nbsp;
                         <% }else { %> 

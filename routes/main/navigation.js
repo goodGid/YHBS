@@ -73,6 +73,8 @@ function getThumbnailEdit(category, seq){
             if(err) reject(err);
             else {
                 connection.query("select * from img_BBS where category = ? and seq = ? ", [category, seq], function(err, rows){
+
+
                     connection.release();
                     if(err) reject(err);
                     else resolve(rows);
@@ -155,9 +157,6 @@ router.get('/grade', async function(req, res){
     try{
         var imageList = await getThumbnailList("grade");
         var pageNumber = req.query.pageNumber;
-
-        console.log(" [in navigation.js]  imageList.length :  " + imageList.length );
-        console.log(" [in navigation.js]  pageNumber :  " + pageNumber );
 
         res.render('grade', {imgList: imageList,pageNumber : pageNumber});        
     }catch(err){
@@ -244,8 +243,10 @@ router.get('/etcBoard/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
         var imageList = await getThumbnailEdit("etc", seq);
+        var pageNumber = req.query.pageNumber;
         var sessionValue = req.session.user_id;
-        res.render('etcBoard', {result: imageList, sessionValue : sessionValue});   
+    
+        res.render('etcBoard', {result: imageList, sessionValue : sessionValue, pageNumber : pageNumber});   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -255,8 +256,9 @@ router.get('/etcBoard/:seq', async function(req,res){
 router.get('/etcEditBoard/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
+        var pageNumber = req.query.pageNumber;
         var imageList = await getThumbnailEdit("etc", seq);
-        res.render('etcEditBoard', {result: imageList, seq : seq});   
+        res.render('etcEditBoard', {result: imageList, seq : seq , pageNumber : pageNumber});   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -273,8 +275,9 @@ router.get('/etcInsertBoard', function(req,res){
 router.get('/etcDelete/:seq', async function(req,res){
     try{
         var seq = req.params.seq;
+        var pageNumber = req.query.pageNumber;
         var deleteImg = await deleteThumbnail("etc", seq);
-        res.redirect('/nav/etc/?pageNumber=1');   
+        res.redirect('/nav/etc/?pageNumber='+pageNumber);   
     }catch(err){
         console.log(err);
         res.status(503).send({result: "fail"});
@@ -299,7 +302,6 @@ router.post('/etcInsertBoard',upload.single('pic'), async function(req, res){
         }
         else
         {
-        console.log(" [ post /editInsertBoard in navigation.js]  imageList.length :  " + imageList.length );
 
         var year = moment().format('YYYY');
         var month = moment().format('MM');
@@ -323,6 +325,7 @@ router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
     var title = req.body.title;
     var contents = req.body.contents;
     var sessionValue = req.session.user_id;
+    var pageNumber = req.query.pageNumber;
 
     pool.getConnection(function(error, connection)
     {
@@ -334,12 +337,10 @@ router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
         }
         else
         {
-            console.log(" [ post /etcEditBoard in navigation.js]  imageList.length :  " + imageList.length );
-
         var query = "UPDATE img_BBS set imgUrl = ?, title = ?, contents = ? where seq = ?";
         var exec = connection.query(query, [imgUrlFromS3, title, contents, seq], function(err, rows) {
         connection.release();  // 반드시 해제해야 합니다.
-        res.render('etc', {imgList: imageList, sessionValue : sessionValue, pageNumber : "1"});
+        res.redirect('/nav/etc/?pageNumber='+pageNumber);
              });        
         }
     });
@@ -352,3 +353,5 @@ router.post('/etcEditBoard/:seq',upload.single('pic'), async function(req, res){
 
 module.exports = router;
 
+
+// console.log(" [ post /editInsertBoard in navigation.js]  imageList.length :  " + imageList.length );

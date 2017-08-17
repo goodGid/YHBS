@@ -14,13 +14,14 @@
             <!-- 
               Current PageNumber 
                                 -->
+            <% var activeChk = pageNumber; %>
             <% if( totalCnt / 5 * contentsCntPerOnePage > 0 ) {
-              if ( pageNumber % 5 == 0 ) {pageNumber = pageNumber - 5;}
+              if ( pageNumber % 5 == 0 ) { pageNumber = pageNumber - 5; }
               for(var i = 5 * parseInt( pageNumber / 5 ) ; i < 5 * parseInt( pageNumber / 5 ) + 5; i++) { 
                 var loopChk = totalCnt - parseInt( contentsCntPerOnePage * i ) ;
                 if ( loopChk <= 0 ) break;  %>
 
-                <% if ( i+1 == pageNumber){ %>
+                <% if ( i+1 == activeChk){ %>
                   <li class="active">
                     <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
                   </li>

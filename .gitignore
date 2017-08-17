@@ -8,6 +8,7 @@
 !.vscode/extensions.json
 .history
 .node_modules/*
+.public/*
 
 # End of https://www.gitignore.io/api/visualstudiocode
 config/aws_config.json
