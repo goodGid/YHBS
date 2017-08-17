@@ -11,10 +11,11 @@
   touch-action: pan-y;
 }
 .bx-wrapper img {
-  max-width: 100%;
+  max-width: 80%;
   height:50%;
   display: block;
 }
+
 .bxslider {
   margin: 0;
   padding: 0;
