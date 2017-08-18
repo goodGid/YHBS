@@ -45,7 +45,6 @@
                       <a href="/nav/<%= currentCategory %>/?pageNumber=<%= i+1 %>"><%= i + 1%></a>
                     </li>
                   <% } %>
-                    
                 <% } %>
            <% } %>
   
@@ -53,7 +52,8 @@
            <!-- 
               Next Button
                           -->
-          <% if ( parseInt( pageNumber / 5 ) * 5 + 5  <= parseInt(pageBarNumber+1) ) { %>
+          <% if ( parseInt( pageNumber / 5 ) * 5 + 5  <= parseInt(pageBarNumber+1) &&  parseInt(pageBarNumber+1) % 5 != 0)
+          { %>
             <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt( pageNumber / 5 ) * 5 + 5  + 1  %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
           <% } else { %>
             <li><a href="/nav/<%= currentCategory %>/?pageNumber=<%= parseInt(pageBarNumber+1) %>"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
