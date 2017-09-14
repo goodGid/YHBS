@@ -1,4 +1,4 @@
 # YBHSchool 
 # Web site
 # Repository
-# http://youngheartsschool.com
+# http://youngheartsboardingschool.com
